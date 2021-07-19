@@ -15,6 +15,11 @@ function createStore(reducer, preState, enhancer) {
   let nextListeners = currentListeners;
   let isDispatching = false;
 
+  if(enhancer){
+    const newCreateStore =  enhancer(createStore);
+    return newCreateStore(reducer, preState);
+ }
+
   function getState() {
     if (isDispatching) {
       throw new Error("Dispatching now,wait a moment");
